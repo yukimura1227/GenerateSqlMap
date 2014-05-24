@@ -1,6 +1,8 @@
 package yukimura1227.generate.sql.map.holder;
 
 
+import lombok.Getter;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @author yukimura1227
  *
  */
+@Getter
 public class PropertyHolder {
     /**
      * ユーザからのインスタンス生成不可
@@ -39,38 +42,5 @@ public class PropertyHolder {
     private String commonXmlMaplerTemplate;
     @Value("${common_select_mapper_xml_template}")
     private String commonSelectMapperXmlTemplate;
-    public String getInputPath() {
-        return inputPath;
-    }
-    public String getInputYamlPath() {
-        return inputYamlPath;
-    }
-    public String getOutputPath() {
-        return outputPath;
-    }
-    public String getPackageBase() {
-        return packageBase;
-    }
-    public String getPackageEntity() {
-        return packageEntity;
-    }
-    public String getPackageMapper() {
-        return packageMapper;
-    }
-    public String getEntityTemplatePath() {
-        return entityTemplatePath;
-    }
-    public String getEntityInterfaceTemplatePath() {
-        return entityInterfaceTemplatePath;
-    }
-    public String getMapplerXmlTemplatePath() {
-        return mapplerXmlTemplatePath;
-    }
-    public String getCommonXmlMaplerTemplate() {
-        return commonXmlMaplerTemplate;
-    }
-    public String getCommonSelectMapperXmlTemplate() {
-        return commonSelectMapperXmlTemplate;
-    }
 
 }

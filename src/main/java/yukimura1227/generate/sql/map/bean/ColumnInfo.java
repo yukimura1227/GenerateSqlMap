@@ -1,5 +1,8 @@
 package yukimura1227.generate.sql.map.bean;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import yukimura1227.util.StringUtil;
 
 /**
@@ -7,21 +10,24 @@ import yukimura1227.util.StringUtil;
  * @author yukimura1227
  *
  */
+@NoArgsConstructor
 public class ColumnInfo {
+    @Getter
     private String columnName;
+    @Getter @Setter
     private String columnType;
+    @Getter
     private String columnName4Java;
+    @Getter @Setter
     private String javaType;
+    @Getter
     private String getterMethodName;
+    @Getter
     private String setterMethodName;
 
-    public ColumnInfo(){};
     public ColumnInfo(String columnName, String columnType ) {
         this.setColumnName(columnName);
         this.columnType = columnType;
-    }
-    public String getColumnName() {
-        return columnName;
     }
     public void setColumnName(String columnName) {
         this.columnName = columnName;
@@ -30,27 +36,6 @@ public class ColumnInfo {
         String columnNameCamel = StringUtil._SplitStr2Camel(columnName, true);
         getterMethodName = "get" + columnNameCamel;
         setterMethodName = "set" + columnNameCamel;
-    }
-    public String getColumnType() {
-        return columnType;
-    }
-    public void setColumnType(String columnType) {
-        this.columnType = columnType;
-    }
-    public String getJavaType() {
-        return javaType;
-    }
-    public void setJavaType(String javaType) {
-        this.javaType = javaType;
-    }
-    public String getColumnName4Java() {
-        return columnName4Java;
-    }
-    public String getGetterMethodName() {
-        return getterMethodName;
-    }
-    public String getSetterMethodName() {
-        return setterMethodName;
     }
 
 }

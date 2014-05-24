@@ -3,6 +3,9 @@ package yukimura1227.generate.sql.map.bean;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import yukimura1227.util.StringUtil;
 
 /**
@@ -11,7 +14,9 @@ import yukimura1227.util.StringUtil;
  *
  */
 public class TableInfoBean {
+    @Getter @Setter
     private String tableName;
+    @Getter @Setter
     private List<ColumnInfo> columnList   = null;
     private String columnStr4Select       = null;
     private String columnStr4InsertValues = null;
@@ -26,18 +31,6 @@ public class TableInfoBean {
     public void addColumn(String columnName, String columnType) {
         ColumnInfo column = new ColumnInfo(columnName, columnType);
         addColumn(column);
-    }
-    public void setTableName(String tableName) {
-        this.tableName = tableName != null  ? tableName.toLowerCase() : null ;
-    }
-    public String getTableName() {
-        return tableName;
-    }
-    public void setColumnList(List<ColumnInfo> columnList) {
-        this.columnList = columnList;
-    }
-    public List<ColumnInfo> getColumnList() {
-        return columnList;
     }
     public String generateColumnStr4Select() {
         if( columnStr4Select != null ) return columnStr4Select;
