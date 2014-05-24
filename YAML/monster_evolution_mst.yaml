@@ -1,4 +1,4 @@
-!!yukimura1227.generate.sql.map.util.TableInfoBean
+!!yukimura1227.generate.sql.map.bean.TableInfoBean
 tableName : monster_evolution_mst
 columnList:
 - {
