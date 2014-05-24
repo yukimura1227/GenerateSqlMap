@@ -1,0 +1,8 @@
+﻿package ${packageMapper};
+
+import java.util.List;
+
+public interface ${commonSelectMapperName}<T> {
+	public List<T> selectAll();
+	public List<T> selectByValue(T param);
+}

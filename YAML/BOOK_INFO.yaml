@@ -1,0 +1,33 @@
+!!yukimura1227.generate.sql.map.util.TableInfoBean
+tableName : BOOK_INFO
+columnList:
+- {
+    columnName : isbn,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : title,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : author,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : price,
+    columnType : integer,
+    javaType   : String,
+  }
+- {
+    columnName : publish,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : published_date,
+    columnType : datetime,
+    javaType   : String,
+  }

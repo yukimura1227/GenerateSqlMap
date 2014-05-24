@@ -1,0 +1,13 @@
+!!yukimura1227.generate.sql.map.util.TableInfoBean
+tableName : LOGIN_USER
+columnList:
+- {
+    columnName : id,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : password,
+    columnType : varchar,
+    javaType   : String,
+  }

@@ -1,0 +1,18 @@
+!!yukimura1227.generate.sql.map.util.TableInfoBean
+tableName : TASK_TAG_RELATION
+columnList:
+- {
+    columnName : user_id,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : task_id,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : tag_id,
+    columnType : char,
+    javaType   : String,
+  }

@@ -1,0 +1,18 @@
+!!yukimura1227.generate.sql.map.util.TableInfoBean
+tableName : monster_evolution_mst
+columnList:
+- {
+    columnName : target_id,
+    columnType : integer,
+    javaType   : String,
+  }
+- {
+    columnName : need_id,
+    columnType : integer,
+    javaType   : String,
+  }
+- {
+    columnName : seq_no,
+    columnType : integer,
+    javaType   : String,
+  }

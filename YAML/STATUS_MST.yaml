@@ -1,0 +1,13 @@
+!!yukimura1227.generate.sql.map.util.TableInfoBean
+tableName : STATUS_MST
+columnList:
+- {
+    columnName : status_id,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : status_name,
+    columnType : varchar,
+    javaType   : String,
+  }

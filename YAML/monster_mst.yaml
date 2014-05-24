@@ -1,0 +1,53 @@
+!!yukimura1227.generate.sql.map.util.TableInfoBean
+tableName : monster_mst
+columnList:
+- {
+    columnName : id,
+    columnType : integer,
+    javaType   : String,
+  }
+- {
+    columnName : name,
+    columnType : integer,
+    javaType   : String,
+  }
+- {
+    columnName : attribute,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : sub_attribute,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : monster_type,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : monster_sub_type,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : leader_skill_id,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : skill_id,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : rare,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : evo_aft_id,
+    columnType : char,
+    javaType   : String,
+  }

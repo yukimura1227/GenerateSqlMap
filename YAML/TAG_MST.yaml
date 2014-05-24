@@ -1,0 +1,13 @@
+!!yukimura1227.generate.sql.map.util.TableInfoBean
+tableName : TAG_MST
+columnList:
+- {
+    columnName : tag_id,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : tag_name,
+    columnType : varchar,
+    javaType   : String,
+  }

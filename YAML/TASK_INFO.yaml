@@ -1,0 +1,88 @@
+!!yukimura1227.generate.sql.map.util.TableInfoBean
+tableName : TASK_INFO
+columnList:
+- {
+    columnName : user_id,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : task_id,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : task_name,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : task_contents,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : remarks,
+    columnType : varchar,
+    javaType   : String,
+  }
+- {
+    columnName : parent_task_id,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : root_task_id,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : task_sts,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : priority,
+    columnType : char,
+    javaType   : String,
+  }
+- {
+    columnName : yotei_start_date,
+    columnType : date,
+    javaType   : String,
+  }
+- {
+    columnName : yotei_end_date,
+    columnType : date,
+    javaType   : String,
+  }
+- {
+    columnName : start_date,
+    columnType : date,
+    javaType   : String,
+  }
+- {
+    columnName : end_date,
+    columnType : date,
+    javaType   : String,
+  }
+- {
+    columnName : child_task_num,
+    columnType : integer,
+    javaType   : String,
+  }
+- {
+    columnName : fin_child_task_num,
+    columnType : integer,
+    javaType   : String,
+  }
+- {
+    columnName : all_child_task_num,
+    columnType : integer,
+    javaType   : String,
+  }
+- {
+    columnName : all_fin_child_task_num,
+    columnType : integer,
+    javaType   : String,
+  }
