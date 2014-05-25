@@ -64,7 +64,7 @@ public class FileUtil {
      * @param packageName
      * @return
      */
-    public static String calcDirName(final String baseDir, String packageName) {
+    private static String calcDirName(final String baseDir, String packageName) {
         String[] packageToken = packageName.split("\\.");
 
         // ファイルセパレータを"/"に統一
