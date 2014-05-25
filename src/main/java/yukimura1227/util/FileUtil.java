@@ -38,7 +38,7 @@ public class FileUtil {
      */
     public static void writeJavaFile(final String writeBaseDir, String packageName, String className, String writeContents) throws IOException {
         mkdir(writeBaseDir, packageName);
-        String writeTargetJavaFilePath = StringUtil.buildJavaFileFullPath(writeBaseDir, packageName, className);
+        String writeTargetJavaFilePath = buildJavaFileFullPath(writeBaseDir, packageName, className);
 
         // ファイル書き込み
         writeFile(writeTargetJavaFilePath,writeContents);
@@ -47,13 +47,32 @@ public class FileUtil {
 
     public static void writeXmlFile(final String writeBaseDir, String packageName, String mapperClassName, String writeContents) throws IOException {
         mkdir(writeBaseDir, packageName);
-        String writeTargetJavaFilePath = StringUtil.calcSqlMapFileName(writeBaseDir, packageName, mapperClassName);
+        String writeTargetJavaFilePath = calcSqlMapFileName(writeBaseDir, packageName, mapperClassName);
 
         // ファイル書き込み
         writeFile(writeTargetJavaFilePath,writeContents);
 
     }
 
+    /**
+     * javaのパッケージ名とクラス名から、.javaファイルのフルパスを組み立てて
+     * 返却する。
+     * @param baseDir
+     * @param packageName
+     * @param className
+     * @return
+     */
+    private static String buildJavaFileFullPath(final String baseDir, final String packageName, final String className) {
+        String javaFileName = StringUtil.calcDirName(baseDir,packageName) + className + ".java";
+
+        return javaFileName;
+    }
+
+    private static String calcSqlMapFileName(final String baseDir, final String packageName, final String fileNameBase) {
+        String xmlFileName = StringUtil.calcDirName(baseDir,packageName) + fileNameBase + ".xml";
+
+        return xmlFileName;
+    }
 
     private static void writeFile(final String targetFileFullPath, String writeContents) throws IOException {
         File writeTargetFile = new File(targetFileFullPath);

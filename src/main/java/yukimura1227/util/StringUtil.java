@@ -80,24 +80,4 @@ public class StringUtil {
         return targetDir;
     }
 
-    /**
-     * javaのパッケージ名とクラス名から、.javaファイルのフルパスを組み立てて
-     * 返却する。
-     * @param baseDir
-     * @param packageName
-     * @param className
-     * @return
-     */
-    public static String buildJavaFileFullPath(final String baseDir, final String packageName, final String className) {
-        String javaFileName = calcDirName(baseDir,packageName) + className + ".java";
-
-        return javaFileName;
-    }
-
-    public static String calcSqlMapFileName(final String baseDir, final String packageName, final String fileNameBase) {
-        String xmlFileName = calcDirName(baseDir,packageName) + fileNameBase + ".xml";
-
-        return xmlFileName;
-    }
-
 }
