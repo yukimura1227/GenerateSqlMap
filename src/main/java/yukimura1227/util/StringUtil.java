@@ -1,21 +1,6 @@
 package yukimura1227.util;
 
 public class StringUtil {
-    public static void main(String[] args) {
-        System.out.println(_SplitStr2Camel("",true));
-        System.out.println(_SplitStr2Camel("",false));
-        System.out.println(_SplitStr2Camel("a",true));
-        System.out.println(_SplitStr2Camel("a",false));
-        System.out.println(_SplitStr2Camel("_",true));
-        System.out.println(_SplitStr2Camel("_",false));
-        System.out.println(_SplitStr2Camel("task_info",true));
-        System.out.println(_SplitStr2Camel("task_info",false));
-        System.out.println(_SplitStr2Camel("task_info_abc",true));
-        System.out.println(_SplitStr2Camel("task_info_abc",false));
-        System.out.println(_SplitStr2Camel("1task_1info_1abc",true));
-        System.out.println(_SplitStr2Camel("1task_1info_1abc",false));
-    }
-
     /**
      * "_"で繋げられた文字列をCamelCase形式に変更する。
      * @param targetString
