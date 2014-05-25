@@ -1,5 +1,0 @@
-package ${packageMapper};
-
-import ${entityClassFqdn};
-
-public interface ${mapperClassName} extends ${commonMapperName}<${entityClassName}>{}
