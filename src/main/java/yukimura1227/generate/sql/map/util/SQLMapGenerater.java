@@ -213,7 +213,6 @@ public class SQLMapGenerater {
      * @return
      */
     private static String templateMerge(String templatePath, VelocityContext velocityContext) {
-        // TODO engineからtemplateを取得する処理もここにまとめるようにする。
         Template template = engine.getTemplate(templatePath);
         String mergedString = "";
         try
