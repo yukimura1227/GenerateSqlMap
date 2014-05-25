@@ -33,12 +33,14 @@ public class EntityGenerater {
     private EntityGenerater() {}
 
     private static void velocitySetup() {
-        // 基本的にエンドユーザが変更する必要が無いためpropertiesのパスは固定でOK
         final String VELOCITY_PROPERTY_PATH = "/sample/config/velocity.properties";
-        InputStream is = EntityGenerater.class.getResourceAsStream(VELOCITY_PROPERTY_PATH);
-        Properties prop = new Properties();
-        try {
-            prop.load(is);
+        // 基本的にエンドユーザが変更する必要が無いためpropertiesのパスは固定でOK
+        Properties velocityProperties = new Properties();
+        try (
+          InputStream is = EntityGenerater.class.getResourceAsStream(VELOCITY_PROPERTY_PATH);
+        )
+        {
+            velocityProperties.load(is);
 
         } catch (IOException e) {
             // TODO 自動生成された catch ブロック
@@ -47,7 +49,7 @@ public class EntityGenerater {
         }
 
         VelocityEngine engine = new VelocityEngine();
-        engine.init(prop);
+        engine.init(velocityProperties);
 
         velocityContext = new VelocityContext();
 
@@ -65,11 +67,13 @@ public class EntityGenerater {
         PropertyHolder prop  = SingletonManager.getPropertyHolder();
         String packageEntity = prop.getPackageEntity();
 
-        String entityClassName = StringUtil._SplitStr2Camel(tableInfo.getTableName(),true);
+        String entityClassName = StringUtil._SplitStr2Camel( tableInfo.getTableName(), true );
 
         List<ColumnInfo> columnList = tableInfo.getColumnList();
 
         List<String> columnName4JavaList = tableInfo.generateColumnNames4JavaList();
+
+        // where句の条件指定用のカラムをcolumnName4JavaListに追加
         for( String columnNameString : tableInfo.generateColumnNames4JavaList() ) {
             columnName4JavaList.add( columnNameString + "4Where");
         }
