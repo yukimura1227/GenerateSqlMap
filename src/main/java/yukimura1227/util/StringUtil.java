@@ -57,15 +57,19 @@ public class StringUtil {
      * 「baseDir/ディレクトリ階層」という値を組み立てる。
      * ex)
      *   baseDir="/var/tmp" packageName="jp.co.xxx.yyy"
-     *   -> return "/var/tmp/jp/co/xxx/yyy"
+     *   -> return "/var/tmp/jp/co/xxx/yyy/"
      * @param baseDir
      * @param packageName
      * @return
      */
     public static String calcDirName(final String baseDir, String packageName) {
         String[] packageToken = packageName.split("\\.");
-        String targetDir = baseDir;
-        if( !targetDir.endsWith("/") && !targetDir.endsWith("\\") ) {
+
+        // ファイルセパレータを"/"に統一
+        String targetDir = baseDir.replaceAll("\\\\", "/");
+
+        // baseDirがファイルセパレータで終わっていない場合
+        if( !targetDir.endsWith("/") ) {
             targetDir += "/";
         }
 
