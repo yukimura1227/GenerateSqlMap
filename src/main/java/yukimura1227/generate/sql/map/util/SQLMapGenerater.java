@@ -29,16 +29,12 @@ import yukimura1227.util.StringUtil;
  *
  */
 public class SQLMapGenerater {
-    private static boolean isVelocitySetupDone = false;
 
     private static VelocityEngine engine = new VelocityEngine();
 
     private SQLMapGenerater() {}
 
-    private static void velocitySetup() {
-        if( isVelocitySetupDone ) {
-            return;
-        }
+    static {
         // 基本的にエンドユーザが変更する必要が無いためpropertiesのパスは固定でOK
         Properties velocityProperties = new Properties();
         try
@@ -55,8 +51,6 @@ public class SQLMapGenerater {
         }
 
         engine.init(velocityProperties);
-
-        isVelocitySetupDone = true;
 
     }
 
@@ -75,10 +69,7 @@ public class SQLMapGenerater {
         String outputPath           = prop.getOutputPath();
         String packageBase          = prop.getPackageBase();
 
-        // 作業場所
-        velocitySetup();
         String mapplerXmlTemplatePath            = prop.getMapplerXmlTemplatePath();
-        Template        velocityMapperXmlTemplate = engine.getTemplate(mapplerXmlTemplatePath);
         VelocityContext velocityContext4MapperXmlTemplate = new VelocityContext();
 
         int colNameMaxLength = calcMaxColNameLength(columnList);
@@ -123,7 +114,7 @@ public class SQLMapGenerater {
         velocityContext4MapperXmlTemplate.put( "setPartList"     , setPartList);
 
         // templateとマージ
-        String sqlMapXml = templateMerge(velocityMapperXmlTemplate, velocityContext4MapperXmlTemplate);
+        String sqlMapXml = templateMerge(mapplerXmlTemplatePath, velocityContext4MapperXmlTemplate);
 
         FileUtil.writeXmlFile(outputPath , packageBase, mapperClassName, sqlMapXml);
 
@@ -142,16 +133,13 @@ public class SQLMapGenerater {
 
         String packageMapper = prop.getPackageMapper();
 
-        velocitySetup();
         String selectCommonMapperXmlTemplatePath = prop.getCommonSelectMapperXmlTemplate();
         VelocityContext velocityContext4CommonSelectMapperTemplate = new VelocityContext();
         velocityContext4CommonSelectMapperTemplate.put( "packageMapper"          , packageMapper );
         velocityContext4CommonSelectMapperTemplate.put( "commonSelectMapperName" , COMMON_SELECT_MAPPER_NAME);
 
-        Template velocityCommonSelectMapperTemplate = engine.getTemplate(selectCommonMapperXmlTemplatePath);
-
         // templateとマージ
-        String mapperSource = templateMerge(velocityCommonSelectMapperTemplate, velocityContext4CommonSelectMapperTemplate);
+        String mapperSource = templateMerge(selectCommonMapperXmlTemplatePath, velocityContext4CommonSelectMapperTemplate);
         FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, COMMON_SELECT_MAPPER_NAME, mapperSource);
 
         System.out.print(mapperSource);
@@ -170,17 +158,14 @@ public class SQLMapGenerater {
 
         String packageMapper = prop.getPackageMapper();
 
-        velocitySetup();
         String commonMapperXmlTemplatePath       = prop.getCommonXmlMaplerTemplate();
         VelocityContext velocityContext4CommonMapperTemplate = new VelocityContext();
         velocityContext4CommonMapperTemplate.put( "packageMapper"         , packageMapper );
         velocityContext4CommonMapperTemplate.put( "commonMapperName"      , COMMON_MAPPER_NAME);
         velocityContext4CommonMapperTemplate.put( "commonSelectMapperName", COMMON_SELECT_MAPPER_NAME);
 
-        Template velocityCommonMapperTemplate = engine.getTemplate(commonMapperXmlTemplatePath);
-
         // templateとマージ
-        String mapperSource = templateMerge(velocityCommonMapperTemplate, velocityContext4CommonMapperTemplate);
+        String mapperSource = templateMerge(commonMapperXmlTemplatePath, velocityContext4CommonMapperTemplate);
         FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, COMMON_MAPPER_NAME, mapperSource);
 
         System.out.print(mapperSource);
@@ -205,7 +190,6 @@ public class SQLMapGenerater {
 
         String packageMapper = prop.getPackageMapper();
 
-        velocitySetup();
         String entityInterfaceTemplatePath = prop.getEntityInterfaceTemplatePath();
         VelocityContext velocityContext4EntityMapperTemplate = new VelocityContext();
         velocityContext4EntityMapperTemplate.put( "packageMapper"    , packageMapper );
@@ -214,9 +198,7 @@ public class SQLMapGenerater {
         velocityContext4EntityMapperTemplate.put( "commonMapperName" , CommonConstants.COMMON_MAPPER_NAME );
         velocityContext4EntityMapperTemplate.put( "entityClassName"  , entityClassName);
 
-        Template velocityEntityMapperTemplate = engine.getTemplate(entityInterfaceTemplatePath);
-
-        String mapperSource = templateMerge(velocityEntityMapperTemplate, velocityContext4EntityMapperTemplate);
+        String mapperSource = templateMerge(entityInterfaceTemplatePath, velocityContext4EntityMapperTemplate);
         FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, MapperClassName, mapperSource);
 
         System.out.print( sb.toString() );
@@ -230,8 +212,9 @@ public class SQLMapGenerater {
      * @param velocityContext
      * @return
      */
-    private static String templateMerge(Template template, VelocityContext velocityContext) {
+    private static String templateMerge(String templatePath, VelocityContext velocityContext) {
         // TODO engineからtemplateを取得する処理もここにまとめるようにする。
+        Template template = engine.getTemplate(templatePath);
         String mergedString = "";
         try
         (
