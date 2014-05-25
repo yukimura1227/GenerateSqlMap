@@ -86,8 +86,9 @@ public class SQLMapGenerater {
     /**
      * テーブル情報を基に、テーブル情報を保持するためのSQLMapper用の文字列を生成
      * @param tableInfo
+     * @throws IOException
      */
-    public static String generateSQLMapStr(TableInfoBean tableInfo) {
+    public static String generateSQLMapStr(TableInfoBean tableInfo) throws IOException {
         PropertyHolder prop         = SingletonManager.getPropertyHolder();
         String tableName            = tableInfo.getTableName();
         String entityClassName      = StringUtil._SplitStr2Camel(tableName, /* 1文字目を大文字にする */ true);
@@ -137,26 +138,14 @@ public class SQLMapGenerater {
         velocityContext4MapperXmlTemplate.put( "entityClassName" , entityClassName);
         velocityContext4MapperXmlTemplate.put( "mapperClassName" , mapperClassName);
         velocityContext4MapperXmlTemplate.put( "tableInfo"       , tableInfo);
-        velocityContext4MapperXmlTemplate.put("resultPartList", resultPartList);
-        velocityContext4MapperXmlTemplate.put("wherePartList" , wherePartList);
-        velocityContext4MapperXmlTemplate.put("setPartList"   , setPartList);
+        velocityContext4MapperXmlTemplate.put( "resultPartList"  , resultPartList);
+        velocityContext4MapperXmlTemplate.put( "wherePartList"   , wherePartList);
+        velocityContext4MapperXmlTemplate.put( "setPartList"     , setPartList);
 
-            String sqlMapXml = "";
+        // templateとマージ
+        String sqlMapXml = templateMerge(velocityMapperXmlTemplate, velocityContext4MapperXmlTemplate);
 
-        try
-        (
-            StringWriter writer = new StringWriter();
-        )
-        {
-            // templateとマージ
-            velocityMapperXmlTemplate.merge(velocityContext4MapperXmlTemplate, writer);
-            sqlMapXml = writer.toString();
-            FileUtil.writeXmlFile(outputPath , packageBase, mapperClassName, sqlMapXml);
-
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-
-        }
+        FileUtil.writeXmlFile(outputPath , packageBase, mapperClassName, sqlMapXml);
 
         System.out.println(sqlMapXml);
 
@@ -166,8 +155,9 @@ public class SQLMapGenerater {
     /**
      * CommonSelectMapperクラスの生成
      * @return
+     * @throws IOException
      */
-    public static String generateCommonSelectMapperSource() {
+    public static String generateCommonSelectMapperSource() throws IOException {
         PropertyHolder prop  = SingletonManager.getPropertyHolder();
 
         String packageMapper = prop.getPackageMapper();
@@ -176,21 +166,9 @@ public class SQLMapGenerater {
         velocityContext4CommonSelectMapperTemplate.put( "packageMapper"          , packageMapper );
         velocityContext4CommonSelectMapperTemplate.put( "commonSelectMapperName" , COMMON_SELECT_MAPPER_NAME);
 
-        String mapperSource = "";
-        try
-        (
-            StringWriter writer = new StringWriter();
-        )
-        {
-            // templateとマージ
-            velocityCommonSelectMapperTemplate.merge(velocityContext4CommonSelectMapperTemplate, writer);
-            mapperSource = writer.toString();
-            FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, COMMON_SELECT_MAPPER_NAME, mapperSource);
-
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-
-        }
+        // templateとマージ
+        String mapperSource = templateMerge(velocityCommonSelectMapperTemplate, velocityContext4CommonSelectMapperTemplate);
+        FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, COMMON_SELECT_MAPPER_NAME, mapperSource);
 
         System.out.print(mapperSource);
 
@@ -201,8 +179,9 @@ public class SQLMapGenerater {
     /**
      * CommonMapperクラスの生成
      * @return
+     * @throws IOException
      */
-    public static String generateCommonMapperSource() {
+    public static String generateCommonMapperSource() throws IOException {
         PropertyHolder prop = SingletonManager.getPropertyHolder();
 
         String packageMapper = prop.getPackageMapper();
@@ -212,22 +191,9 @@ public class SQLMapGenerater {
         velocityContext4CommonMapperTemplate.put( "commonMapperName"      , COMMON_MAPPER_NAME);
         velocityContext4CommonMapperTemplate.put( "commonSelectMapperName", COMMON_SELECT_MAPPER_NAME);
 
-
-        String mapperSource = "";
-        try
-        (
-            StringWriter writer = new StringWriter();
-        )
-        {
-            // templateとマージ
-            velocityCommonMapperTemplate.merge(velocityContext4CommonMapperTemplate, writer);
-            mapperSource = writer.toString();
-            FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, COMMON_MAPPER_NAME, mapperSource);
-
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-
-        }
+        // templateとマージ
+        String mapperSource = templateMerge(velocityCommonMapperTemplate, velocityContext4CommonMapperTemplate);
+        FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, COMMON_MAPPER_NAME, mapperSource);
 
         System.out.print(mapperSource);
 
@@ -240,8 +206,9 @@ public class SQLMapGenerater {
      * 各テーブル用のMapperクラスを作成
      * @param tableInfo
      * @return
+     * @throws IOException
      */
-    public static String generateMapperSource(TableInfoBean tableInfo) {
+    public static String generateMapperSource(TableInfoBean tableInfo) throws IOException {
         PropertyHolder prop    = SingletonManager.getPropertyHolder();
         StringBuilder sb       = new StringBuilder();
         String tableName       = tableInfo.getTableName();
@@ -257,25 +224,37 @@ public class SQLMapGenerater {
         velocityContext4EntityMapperTemplate.put( "commonMapperName" , CommonConstants.COMMON_MAPPER_NAME );
         velocityContext4EntityMapperTemplate.put( "entityClassName"  , entityClassName);
 
-        String mapperSource = "";
+        String mapperSource = templateMerge(velocityEntityMapperTemplate, velocityContext4EntityMapperTemplate);
+        FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, MapperClassName, mapperSource);
 
+        System.out.print( sb.toString() );
+
+        return mapperSource;
+    }
+
+    /**
+     * velocityTemplateとveclotiyContextのマージを行い、結果の文字列を返却する。
+     * @param template
+     * @param velocityContext
+     * @return
+     */
+    private static String templateMerge(Template template, VelocityContext velocityContext) {
+        String mergedString = "";
         try
         (
             StringWriter writer = new StringWriter();
         )
         {
-            velocityEntityMapperTemplate.merge(velocityContext4EntityMapperTemplate, writer);
-            mapperSource = writer.toString();
-            FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, MapperClassName, mapperSource);
+            template.merge(velocityContext, writer);
+            mergedString = writer.toString();
 
         } catch (IOException ioe) {
             ioe.printStackTrace();
 
         }
 
-        System.out.print( sb.toString() );
+        return mergedString;
 
-        return mapperSource;
     }
 
     /**
@@ -295,6 +274,5 @@ public class SQLMapGenerater {
         return maxLength;
 
     }
-
 
 }
