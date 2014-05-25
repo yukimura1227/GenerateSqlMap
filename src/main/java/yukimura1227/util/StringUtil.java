@@ -16,6 +16,12 @@ public class StringUtil {
         System.out.println(_SplitStr2Camel("1task_1info_1abc",false));
     }
 
+    /**
+     * "_"で繋げられた文字列をCamelCase形式に変更する。
+     * @param targetString
+     * @param initialUpperFlg 最初の文字を大文字化するかどうか？
+     * @return
+     */
     public static String _SplitStr2Camel( String targetString, boolean initialUpperFlg){
         // 変換できない文字列は、そのまま返却する。
         if( targetString == null || "".equals(targetString) || "_".equals(targetString) ) {
@@ -29,20 +35,34 @@ public class StringUtil {
         // 先頭文字の大文字化を行う場合
         if( initialUpperFlg ) {
             // 一つ目の単語の１文字目を大文字化
-            sb.append( wordArray[0].substring(0, 1).toUpperCase() + wordArray[0].substring(1) );
+            sb.append( toUpperCaseAtFirstChar(wordArray[0]) );
+
         // 上記以外の場合
         } else {
             // 一つ目の単語はそのまま設定
             sb.append(wordArray[0]);
+
         }
+
         // ２つ目以降の単語は、常に、１文字目を大文字化
         for( int i = 1; i < wordArray.length; i++ ) {
-            sb.append( wordArray[i].substring(0, 1).toUpperCase() + wordArray[i].substring(1) );
+            sb.append( toUpperCaseAtFirstChar(wordArray[i]) );
+
         }
 
         return sb.toString();
     }
 
+    private static String toUpperCaseAtFirstChar(String targetWord) {
+        return targetWord.substring(0,1).toUpperCase() + targetWord.substring(1);
+    }
+
+    /**
+     * targetStringをdressStrで囲んだ文字列を返却する
+     * @param targetString
+     * @param dressStr
+     * @return
+     */
     public static String embrace(String targetString, String dressStr) {
         return dressStr + targetString + dressStr;
     }
