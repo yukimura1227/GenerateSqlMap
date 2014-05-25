@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.*;
 import static yukimura1227.util.StringUtil._SplitStr2Camel;
+import static yukimura1227.util.StringUtil.embrace;
 
 import org.junit.Test;
 
@@ -109,4 +110,41 @@ public class StringUtilTest {
             assertThat( result, is( expected ) );
         }
     }
+
+
+    public static class EmbraceTest {
+        @Test
+        public void embraceでabcを___で修飾すると___abc___となること() {
+            String embraceTarget = "abc";
+            String embraceChar = "___";
+            String expected = "___abc___";
+
+            String result = embrace(embraceTarget, embraceChar);
+
+            assertThat( result, is(expected) );
+        }
+
+        @Test
+        public void embraceで空文字を___で修飾すると______となること() {
+            String embraceTarget = "";
+            String embraceChar = "___";
+            String expected = "______";
+
+            String result = embrace(embraceTarget, embraceChar);
+
+            assertThat( result, is(expected) );
+        }
+
+        @Test
+        public void embraceでnullを___で修飾すると___null___となること() {
+            String embraceTarget = null;
+            String embraceChar = "___";
+            String expected = "___null___";
+
+            String result = embrace(embraceTarget, embraceChar);
+
+            assertThat( result, is(expected) );
+        }
+    }
+
 }
