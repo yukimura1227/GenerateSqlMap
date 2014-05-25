@@ -21,7 +21,7 @@ public class FileUtil {
      * @return フォルダを作成したらtrue。既にフォルダが存在するなどで、作成しなかったらfalse
      */
     public static boolean mkdir(final String writeBaseDir, String packageName) {
-        String writeTargetDir = StringUtil.calcDirName(writeBaseDir, packageName);
+        String writeTargetDir = calcDirName(writeBaseDir, packageName);
 
         File dirDigger = new File(writeTargetDir);
 
@@ -55,6 +55,34 @@ public class FileUtil {
     }
 
     /**
+     * パッケージ名から想定されるディレクトリ階層を判断し
+     * 「baseDir/ディレクトリ階層」という値を組み立てる。
+     * ex)
+     *   baseDir="/var/tmp" packageName="jp.co.xxx.yyy"
+     *   -> return "/var/tmp/jp/co/xxx/yyy/"
+     * @param baseDir
+     * @param packageName
+     * @return
+     */
+    public static String calcDirName(final String baseDir, String packageName) {
+        String[] packageToken = packageName.split("\\.");
+
+        // ファイルセパレータを"/"に統一
+        String targetDir = baseDir.replaceAll("\\\\", "/");
+
+        // baseDirがファイルセパレータで終わっていない場合
+        if( !targetDir.endsWith("/") ) {
+            targetDir += "/";
+        }
+
+        for( String targetPackage : packageToken ) {
+            targetDir += targetPackage + "/";
+        }
+
+        return targetDir;
+    }
+
+    /**
      * javaのパッケージ名とクラス名から、.javaファイルのフルパスを組み立てて
      * 返却する。
      * @param baseDir
@@ -63,13 +91,13 @@ public class FileUtil {
      * @return
      */
     private static String buildJavaFileFullPath(final String baseDir, final String packageName, final String className) {
-        String javaFileName = StringUtil.calcDirName(baseDir,packageName) + className + ".java";
+        String javaFileName = calcDirName(baseDir,packageName) + className + ".java";
 
         return javaFileName;
     }
 
     private static String calcSqlMapFileName(final String baseDir, final String packageName, final String fileNameBase) {
-        String xmlFileName = StringUtil.calcDirName(baseDir,packageName) + fileNameBase + ".xml";
+        String xmlFileName = calcDirName(baseDir,packageName) + fileNameBase + ".xml";
 
         return xmlFileName;
     }

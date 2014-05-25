@@ -52,32 +52,6 @@ public class StringUtil {
         return dressStr + targetString + dressStr;
     }
 
-    /**
-     * パッケージ名から想定されるディレクトリ階層を判断し
-     * 「baseDir/ディレクトリ階層」という値を組み立てる。
-     * ex)
-     *   baseDir="/var/tmp" packageName="jp.co.xxx.yyy"
-     *   -> return "/var/tmp/jp/co/xxx/yyy/"
-     * @param baseDir
-     * @param packageName
-     * @return
-     */
-    public static String calcDirName(final String baseDir, String packageName) {
-        String[] packageToken = packageName.split("\\.");
 
-        // ファイルセパレータを"/"に統一
-        String targetDir = baseDir.replaceAll("\\\\", "/");
-
-        // baseDirがファイルセパレータで終わっていない場合
-        if( !targetDir.endsWith("/") ) {
-            targetDir += "/";
-        }
-
-        for( String targetPackage : packageToken ) {
-            targetDir += targetPackage + "/";
-        }
-
-        return targetDir;
-    }
 
 }
