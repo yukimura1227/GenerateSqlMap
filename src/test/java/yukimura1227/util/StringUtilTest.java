@@ -37,7 +37,7 @@ public class StringUtilTest {
 
             String result = _SplitStr2Camel(op1,true);
 
-            assertThat( result, is( expected ) );
+            assertThat( result, is(expected) );
         }
 
         @Test
@@ -47,7 +47,7 @@ public class StringUtilTest {
 
             String result = _SplitStr2Camel(op1,false);
 
-            assertThat( result, is( expected ) );
+            assertThat( result, is(expected) );
         }
 
         @Test
@@ -57,7 +57,7 @@ public class StringUtilTest {
 
             String result = _SplitStr2Camel(op1,true);
 
-            assertThat( result, is( expected ) );
+            assertThat( result, is(expected) );
         }
 
         @Test
@@ -67,7 +67,7 @@ public class StringUtilTest {
 
             String result = _SplitStr2Camel(op1,false);
 
-            assertThat( result, is( expected ) );
+            assertThat( result, is(expected) );
         }
 
         @Test
@@ -77,7 +77,7 @@ public class StringUtilTest {
 
             String result = _SplitStr2Camel(op1,true);
 
-            assertThat( result, is( expected ) );
+            assertThat( result, is(expected) );
         }
 
         @Test
@@ -87,7 +87,7 @@ public class StringUtilTest {
 
             String result = _SplitStr2Camel(op1,false);
 
-            assertThat( result, is( expected ) );
+            assertThat( result, is(expected) );
         }
 
         @Test
@@ -97,7 +97,7 @@ public class StringUtilTest {
 
             String result = _SplitStr2Camel(op1,true);
 
-            assertThat( result, is( expected ) );
+            assertThat( result, is(expected) );
         }
 
         @Test
@@ -107,7 +107,7 @@ public class StringUtilTest {
 
             String result = _SplitStr2Camel(op1,false);
 
-            assertThat( result, is( expected ) );
+            assertThat( result, is(expected) );
         }
     }
 
