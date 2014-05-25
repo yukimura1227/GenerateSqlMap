@@ -25,6 +25,7 @@ import yukimura1227.util.StringUtil;
  *
  */
 public class EntityGenerater {
+    private static boolean isVelocitySetupDone = false;
 
     private static Template velocityTemplate;
     private static VelocityContext velocityContext;
@@ -33,6 +34,9 @@ public class EntityGenerater {
     private EntityGenerater() {}
 
     private static void velocitySetup() {
+        if( isVelocitySetupDone ) {
+            return;
+        }
         final String VELOCITY_PROPERTY_PATH = "/sample/config/velocity.properties";
         // 基本的にエンドユーザが変更する必要が無いためpropertiesのパスは固定でOK
         Properties velocityProperties = new Properties();
@@ -55,6 +59,8 @@ public class EntityGenerater {
 
         String entityTemplatePath = SingletonManager.getPropertyHolder().getEntityTemplatePath();
         velocityTemplate = engine.getTemplate(entityTemplatePath);
+
+        isVelocitySetupDone = true;
 
     }
 
