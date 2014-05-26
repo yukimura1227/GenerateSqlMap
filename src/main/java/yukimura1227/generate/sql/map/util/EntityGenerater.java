@@ -2,15 +2,10 @@ package yukimura1227.generate.sql.map.util;
 
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 
 import yukimura1227.generate.sql.map.bean.ColumnInfo;
 import yukimura1227.generate.sql.map.bean.TableInfoBean;
@@ -25,44 +20,10 @@ import yukimura1227.util.StringUtil;
  *
  */
 public class EntityGenerater {
-    private static boolean isVelocitySetupDone = false;
 
-    private static Template velocityTemplate;
-    private static VelocityContext velocityContext;
 
     // インスタンス生成不可
     private EntityGenerater() {}
-
-    private static void velocitySetup() {
-        if( isVelocitySetupDone ) {
-            return;
-        }
-        final String VELOCITY_PROPERTY_PATH = "/sample/config/velocity.properties";
-        // 基本的にエンドユーザが変更する必要が無いためpropertiesのパスは固定でOK
-        Properties velocityProperties = new Properties();
-        try (
-          InputStream is = EntityGenerater.class.getResourceAsStream(VELOCITY_PROPERTY_PATH);
-        )
-        {
-            velocityProperties.load(is);
-
-        } catch (IOException e) {
-            // TODO 自動生成された catch ブロック
-            e.printStackTrace();
-
-        }
-
-        VelocityEngine engine = new VelocityEngine();
-        engine.init(velocityProperties);
-
-        velocityContext = new VelocityContext();
-
-        String entityTemplatePath = SingletonManager.getPropertyHolder().getEntityTemplatePath();
-        velocityTemplate = engine.getTemplate(entityTemplatePath);
-
-        isVelocitySetupDone = true;
-
-    }
 
 
     /**
@@ -86,17 +47,16 @@ public class EntityGenerater {
         String columnName4JavaListCsv = StringUtils.join(columnName4JavaList, ",");
 
         // velocityのSetup
-        velocitySetup();
+        VelocityContext velocityContext = new VelocityContext();
         velocityContext.put( "entityPackage"         , packageEntity );
         velocityContext.put( "entityClassName"       , entityClassName);
         velocityContext.put( "columnList"            , columnList);
         velocityContext.put( "columnName4JavaListCsv", columnName4JavaListCsv);
 
         // templateとマージ
-        StringWriter writer = new StringWriter();
-        velocityTemplate.merge(velocityContext, writer);
+        String entityTemplatePath = SingletonManager.getPropertyHolder().getEntityTemplatePath();
 
-        String entityClassSource = writer.toString();
+        String entityClassSource = VelocityUtil.templateMerge(entityTemplatePath, velocityContext);
         System.out.println(entityClassSource);
 
         try {

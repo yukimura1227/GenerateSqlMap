@@ -5,16 +5,11 @@ import static yukimura1227.generate.sql.map.util.CommonConstants.COMMON_SELECT_M
 import static yukimura1227.generate.sql.map.util.CommonConstants.DOUBLE_QUATE;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 
 import yukimura1227.generate.sql.map.bean.ColumnInfo;
 import yukimura1227.generate.sql.map.bean.TableInfoBean;
@@ -30,29 +25,7 @@ import yukimura1227.util.StringUtil;
  */
 public class SQLMapGenerater {
 
-    private static VelocityEngine engine = new VelocityEngine();
-
     private SQLMapGenerater() {}
-
-    static {
-        // 基本的にエンドユーザが変更する必要が無いためpropertiesのパスは固定でOK
-        Properties velocityProperties = new Properties();
-        try
-        (
-            InputStream is = EntityGenerater.class.getResourceAsStream("/sample/config/velocity.properties");
-        )
-        {
-            velocityProperties.load(is);
-
-        } catch (IOException e) {
-            // TODO 自動生成された catch ブロック
-            e.printStackTrace();
-
-        }
-
-        engine.init(velocityProperties);
-
-    }
 
     /**
      * テーブル情報を基に、テーブル情報を保持するためのSQLMapper用の文字列を生成
@@ -114,7 +87,7 @@ public class SQLMapGenerater {
         velocityContext4MapperXmlTemplate.put( "setPartList"     , setPartList);
 
         // templateとマージ
-        String sqlMapXml = templateMerge(mapplerXmlTemplatePath, velocityContext4MapperXmlTemplate);
+        String sqlMapXml = VelocityUtil.templateMerge(mapplerXmlTemplatePath, velocityContext4MapperXmlTemplate);
 
         FileUtil.writeXmlFile(outputPath , packageBase, mapperClassName, sqlMapXml);
 
@@ -139,7 +112,7 @@ public class SQLMapGenerater {
         velocityContext4CommonSelectMapperTemplate.put( "commonSelectMapperName" , COMMON_SELECT_MAPPER_NAME);
 
         // templateとマージ
-        String mapperSource = templateMerge(selectCommonMapperXmlTemplatePath, velocityContext4CommonSelectMapperTemplate);
+        String mapperSource = VelocityUtil.templateMerge(selectCommonMapperXmlTemplatePath, velocityContext4CommonSelectMapperTemplate);
         FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, COMMON_SELECT_MAPPER_NAME, mapperSource);
 
         System.out.print(mapperSource);
@@ -165,7 +138,7 @@ public class SQLMapGenerater {
         velocityContext4CommonMapperTemplate.put( "commonSelectMapperName", COMMON_SELECT_MAPPER_NAME);
 
         // templateとマージ
-        String mapperSource = templateMerge(commonMapperXmlTemplatePath, velocityContext4CommonMapperTemplate);
+        String mapperSource = VelocityUtil.templateMerge(commonMapperXmlTemplatePath, velocityContext4CommonMapperTemplate);
         FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, COMMON_MAPPER_NAME, mapperSource);
 
         System.out.print(mapperSource);
@@ -198,7 +171,7 @@ public class SQLMapGenerater {
         velocityContext4EntityMapperTemplate.put( "commonMapperName" , CommonConstants.COMMON_MAPPER_NAME );
         velocityContext4EntityMapperTemplate.put( "entityClassName"  , entityClassName);
 
-        String mapperSource = templateMerge(entityInterfaceTemplatePath, velocityContext4EntityMapperTemplate);
+        String mapperSource = VelocityUtil.templateMerge(entityInterfaceTemplatePath, velocityContext4EntityMapperTemplate);
         FileUtil.writeJavaFile(prop.getOutputPath(), packageMapper, MapperClassName, mapperSource);
 
         System.out.print( sb.toString() );
@@ -206,31 +179,6 @@ public class SQLMapGenerater {
         return mapperSource;
     }
 
-    /**
-     * velocityTemplateとveclotiyContextのマージを行い、結果の文字列を返却する。
-     * @param template
-     * @param velocityContext
-     * @return
-     */
-    private static String templateMerge(String templatePath, VelocityContext velocityContext) {
-        Template template = engine.getTemplate(templatePath);
-        String mergedString = "";
-        try
-        (
-            StringWriter writer = new StringWriter();
-        )
-        {
-            template.merge(velocityContext, writer);
-            mergedString = writer.toString();
-
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-
-        }
-
-        return mergedString;
-
-    }
 
     /**
      * リストに設定されたカラム名で最大の長さを探しだす。
