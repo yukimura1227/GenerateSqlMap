@@ -17,6 +17,7 @@ import yukimura1227.generate.sql.map.holder.PropertyHolder;
 import yukimura1227.generate.sql.map.holder.SingletonManager;
 import yukimura1227.util.FileUtil;
 import yukimura1227.util.StringUtil;
+import yukimura1227.util.VelocityUtil;
 
 /**
  * SQLMapを生成するクラス
