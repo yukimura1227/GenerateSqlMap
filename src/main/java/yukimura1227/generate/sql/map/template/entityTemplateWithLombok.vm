@@ -2,8 +2,10 @@ package ${entityPackage};
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter @Setter
+@ToString
 public class ${entityClassName} {
 #foreach(${columnInfo} in ${columnList})
     private ${columnInfo.javaType} ${columnInfo.columnName4Java};
@@ -11,10 +13,6 @@ public class ${entityClassName} {
 #foreach(${columnInfo} in ${columnList})
     private ${columnInfo.javaType} ${columnInfo.columnName4Java}4Where;
 #end
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this);
-    }
 
     @Override
     public int hashCode() {
