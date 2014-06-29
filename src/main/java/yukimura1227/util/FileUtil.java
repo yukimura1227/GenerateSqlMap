@@ -45,9 +45,9 @@ public class FileUtil {
 
     }
 
-    public static void writeXmlFile(final String writeBaseDir, String packageName, String mapperClassName, String writeContents) throws IOException {
+    public static void writeXmlFile(final String writeBaseDir, String packageName, String fileNameBase, String writeContents) throws IOException {
         mkdir(writeBaseDir, packageName);
-        String writeTargetJavaFilePath = calcSqlMapFileName(writeBaseDir, packageName, mapperClassName);
+        String writeTargetJavaFilePath = calcSqlMapFileName(writeBaseDir, packageName, fileNameBase);
 
         // ファイル書き込み
         writeFile(writeTargetJavaFilePath,writeContents);

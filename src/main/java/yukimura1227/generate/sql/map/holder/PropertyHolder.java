@@ -32,6 +32,8 @@ public class PropertyHolder {
     private String packageEntity;
     @Value("${generate.package.mapper}")
     private String packageMapper;
+    @Value("${generate.package.mybatis_conf}")
+    private String packageMybatisConfig;
     @Value("${entity_template_path}")
     private String entityTemplatePath;
     @Value("${entity_interface_template_path}")
@@ -42,5 +44,7 @@ public class PropertyHolder {
     private String commonXmlMaplerTemplate;
     @Value("${common_select_mapper_xml_template}")
     private String commonSelectMapperXmlTemplate;
+    @Value("${mybatis_config_template}")
+    private String mybatisConfigTemplate;
 
 }

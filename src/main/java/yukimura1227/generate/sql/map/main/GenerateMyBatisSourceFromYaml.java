@@ -76,6 +76,8 @@ public class GenerateMyBatisSourceFromYaml {
 
         SQLMapGenerater.generateMapperSource(tableInfoBean);
 
+        SQLMapGenerater.generateMyBatisConfig();
+
     }
 
 }

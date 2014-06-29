@@ -148,6 +148,26 @@ public class SQLMapGenerater {
 
     }
 
+    public static String generateMyBatisConfig() throws IOException {
+        PropertyHolder prop = SingletonManager.getPropertyHolder();
+
+        final String configFileNameBase = "mybatis-config";
+
+        String packageMyBaticConf = prop.getPackageMybatisConfig();
+
+        String mybatisConfigTemplatePath = prop.getMybatisConfigTemplate();
+        VelocityContext velocityContext4MybatisConfTemplate = new VelocityContext();
+        velocityContext4MybatisConfTemplate.put( "packageBase" , prop.getPackageBase() );
+
+        // templateとマージ
+        String mybaticConfStr = VelocityUtil.templateMerge(mybatisConfigTemplatePath, velocityContext4MybatisConfTemplate);
+        FileUtil.writeXmlFile(prop.getOutputPath(), packageMyBaticConf, configFileNameBase, mybaticConfStr);
+
+        System.out.println(mybaticConfStr);
+
+        return mybaticConfStr;
+    }
+
 
     /**
      * 各テーブル用のMapperクラスを作成
