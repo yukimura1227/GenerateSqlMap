@@ -91,6 +91,26 @@ public class StringUtilTest {
         }
 
         @Test
+        public void _SplitStr2CamelにABC_DEFG_HIJKとfalseを渡してabcDefgHijkとなること() {
+            String op1 = "ABC_DEFG_HIJK";
+            String expected = "abcDefgHijk";
+
+            String result = _SplitStr2Camel(op1,false);
+
+            assertThat( result, is(expected) );
+        }
+
+        @Test
+        public void _SplitStr2CamelにABC_DEFG_HIJKとtrueを渡してAbcDefgHijkとなること() {
+            String op1 = "ABC_DEFG_HIJK";
+            String expected = "AbcDefgHijk";
+
+            String result = _SplitStr2Camel(op1,true);
+
+            assertThat( result, is(expected) );
+        }
+
+        @Test
         public void _SplitStr2Camelに1abc_defg_hijklとtrueを渡して1abcDefgHijklとなること() {
             String op1 = "1abc_defg_hijkl";
             String expected = "1abcDefgHijkl";

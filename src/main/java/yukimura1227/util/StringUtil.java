@@ -24,8 +24,8 @@ public class StringUtil {
 
         // 上記以外の場合
         } else {
-            // 一つ目の単語はそのまま設定
-            sb.append(wordArray[0]);
+            // 一つ目の単語は小文字にして設定
+            sb.append( wordArray[0].toLowerCase() );
 
         }
 
@@ -38,9 +38,16 @@ public class StringUtil {
         return sb.toString();
     }
 
+    /**
+     * 1文字目を大文字に変換し、
+     * 2文字目以降を小文字に変換する。
+     * @param targetWord
+     * @return
+     */
     private static String toUpperCaseAtFirstChar(String targetWord) {
-        return targetWord.substring(0,1).toUpperCase() + targetWord.substring(1);
+        return targetWord.substring(0,1).toUpperCase() + targetWord.substring(1).toLowerCase();
     }
+
 
     /**
      * targetStringをdressStrで囲んだ文字列を返却する
