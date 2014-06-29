@@ -11,8 +11,8 @@ create table BOOK_INFO(
 --
 select * from BOOK_INFO;
 
--- 以下は、mySQL（sysdate()を利用しているので）
--- INSERT INTO BOOK_INFO (isbn,title,auther,price,publish,published_date) VALUES ('99999999','タイトル','著者',100,'なんとか出版',sysdate());
+-- 以下は、mySQL用（sysdate()を利用しているので）
+-- INSERT INTO BOOK_INFO (isbn,title,author,price,publish,published_date) VALUES ('99999999','タイトル','著者',100,'なんとか出版',sysdate());
 
 /* ログインユーザの取得 */
 select * from BOOK_INFO;
